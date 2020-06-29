@@ -358,14 +358,13 @@ class TestUbootAutomation:
                     "More boards failed than expected. Failed: %d, Total: %d"
                     % (failed, total)
                 )
-            except AssertionError:
+            finally:
                 for file in os.listdir(env["LOGS"]):
                     with open(os.path.join(env["LOGS"], file)) as fd:
                         log = fd.readlines()
                         if "AutoPatchFailed\n" in log:
                             print("Last 50 lines of output from failed board: " + file)
                             print("".join(log[-50:]))
-                raise
 
             shutil.rmtree(env["LOGS"])
 
